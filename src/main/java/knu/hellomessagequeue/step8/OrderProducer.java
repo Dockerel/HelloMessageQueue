@@ -1,4 +1,4 @@
-package knu.hellomessagequeue.step7;
+package knu.hellomessagequeue.step8;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ public class OrderProducer {
 
     public void sendShipping(String message) {
         rabbitTemplate.convertAndSend(
-                RabbitMQConfig.ORDER_EXCHANGE,
+                RabbitMQConfig.ORDER_TOPIC_EXCHANGE,
                 "order.completed.shipping",
                 message
         );

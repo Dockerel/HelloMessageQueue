@@ -1,4 +1,4 @@
-package knu.hellomessagequeue.step7;
+package knu.hellomessagequeue.step8;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
