@@ -4,6 +4,7 @@ spring:
     port: 5672
     username: guestuser
     password: guestuser
+    publisher-confirm-type: correlated
   application:
     name: HelloMessageQueue
   datasource:

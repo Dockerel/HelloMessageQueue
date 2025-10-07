@@ -1,4 +1,4 @@
-package knu.hellomessagequeue.step9;
+package knu.hellomessagequeue.step10;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ public class TransactionController {
     @PostMapping
     public ResponseEntity<String> sendMessage(
             @RequestBody StockEntity stockEntity,
-            @RequestParam(required = false, defaultValue = "success") String testCase
+            @RequestParam(required = false, defaultValue = "success") boolean testCase
     ) {
-        System.out.println("Send message : " + stockEntity);
+        System.out.println("Publisher Send message : " + stockEntity);
 
         try {
             messageProducer.sendMessage(stockEntity, testCase);

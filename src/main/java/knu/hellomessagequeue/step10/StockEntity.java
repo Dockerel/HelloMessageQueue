@@ -1,4 +1,4 @@
-package knu.hellomessagequeue.step9;
+package knu.hellomessagequeue.step10;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
