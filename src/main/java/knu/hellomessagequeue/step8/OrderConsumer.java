@@ -10,35 +10,21 @@ import org.springframework.stereotype.Component;
 public class OrderConsumer {
 
     private final RabbitTemplate rabbitTemplate;
-    private final RetryTemplate retryTemplate;
+//    private final RetryTemplate retryTemplate;
 
     public OrderConsumer(RabbitTemplate rabbitTemplate, RetryTemplate retryTemplate) {
         this.rabbitTemplate = rabbitTemplate;
-        this.retryTemplate = retryTemplate;
+//        this.retryTemplate = retryTemplate;
     }
 
-    @RabbitListener(queues = RabbitMQConfig.ORDER_COMPLETED_QUEUE)
-    public void consume(String message) {
-        retryTemplate.execute(context -> {
-            try {
-                System.out.println("# 리시브 메시지 : " + message + " # retry : " + context.getRetryCount());
+    private int retryCount;
 
-                if ("fail".equalsIgnoreCase(message)) {
-                    throw new RuntimeException(message);
-                }
-                System.out.println("# 메시지 처리 성공 " + message);
-            } catch (Exception e) {
-                if (context.getRetryCount() >= 2) {
-                    rabbitTemplate.convertAndSend(
-                            RabbitMQConfig.ORDER_TOPIC_DLX,
-                            RabbitMQConfig.DEAD_LETTER_ROUTING_KEY,
-                            message
-                    );
-                } else {
-                    throw e;
-                }
-            }
-            return null;
-        });
+    @RabbitListener(queues = RabbitMQConfig.ORDER_COMPLETED_QUEUE)
+    public void processMessage(String message) {
+        System.out.println("Received message: " + message + "count : " + retryCount++);
+        if ("fail".equals(message)) {
+            throw new RuntimeException("- Processing failed. Retry");
+        }
+        System.out.println("Message processed successfully: " + message);
     }
 }

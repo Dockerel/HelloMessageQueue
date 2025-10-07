@@ -4,6 +4,14 @@ spring:
     port: 5672
     username: guestuser
     password: guestuser
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 1000
+        default-requeue-rejected: false
   application:
     name: HelloMessageQueue
 server:
